@@ -2,6 +2,16 @@ const { ApolloServer } = require('apollo-server');
 
 const typeDefs = require('./typeDefs');
 const resolvers = require('./resolvers');
+const mongoose = require('mongoose');
+
+require('dotenv').config();
+
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true
+  })
+  .then(() => console.log('db connected'))
+  .catch(err => console.log(err))
 
 const server = new ApolloServer({
 
@@ -12,5 +22,5 @@ const server = new ApolloServer({
 });
 
 server.listen().then(({ url }) => {
-  console.log(url)
+  console.log(`server listening on ${url}`)
 })
